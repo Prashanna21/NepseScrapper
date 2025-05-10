@@ -1,0 +1,21 @@
+{
+  "name": "webscrapper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": { 
+    "test": "nodemon index.js",
+    "dev": "node --watch index.js",
+    "start" : "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "puppeteer": "^24.8.2"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}
