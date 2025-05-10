@@ -14,6 +14,8 @@ const scrapper = async (symbol) => {
   const price = await priceSelector.evaluate((el) => el.textContent);
 
   await browser.close();
+
+  return price;
 };
 
 export default scrapper;
