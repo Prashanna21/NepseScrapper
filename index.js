@@ -2,6 +2,9 @@ import express from "express";
 import scrapper from "./ScrapperLogic/scrapper.js";
 import { Client, Events, GatewayIntentBits, IntentsBitField } from "discord.js";
 import "dotenv/config";
+import scrapperService from "./ScrapperLogic/NepseScrapper.js";
+import fs from "fs";
+import { websiteScreensShot } from "./ScrapperLogic/WebsiteScreenShot.js";
 
 const app = express();
 
@@ -35,10 +38,69 @@ client.on("messageCreate", async (msg) => {
   const msgArray = msg.content.split(" ");
 
   if (msgArray[0] == "priceInf") {
-    console.log(msgArray[1]);
     const data = await scrapper(msgArray[1]);
     console.log(data);
     msg.reply(msgArray[1] + " Price: " + data);
+  }
+
+  if (msgArray[0] == "ss") {
+    try {
+      const filePath = await websiteScreensShot(msgArray[1]);
+      await msg.reply({
+        content: `Screenshot of ${msgArray[1]}`,
+        files: [filePath],
+      });
+
+      fs.unlinkSync(filePath);
+    } catch (error) {
+      console.error("Error taking screenshot:", error.message);
+      msg.reply("Failed to take a screenshot.");
+    }
+  }
+
+  if (msgArray == "nepsestat") {
+    try {
+      const filePath = await scrapperService.screenShotNepseStat();
+      await msg.reply({
+        content: `Screenshot of Nepse Status`,
+        files: [filePath],
+      });
+
+      fs.unlinkSync(filePath);
+    } catch (error) {
+      console.error("Error taking screenshot:", error.message);
+      msg.reply("Failed to take a screenshot.");
+    }
+  }
+
+  if (msgArray == "nepsetg") {
+    try {
+      const filePath = await scrapperService.topGainer();
+      await msg.reply({
+        content: `Screenshot of Nepse Status`,
+        files: [filePath],
+      });
+
+      fs.unlinkSync(filePath);
+    } catch (error) {
+      console.error("Error taking screenshot:", error.message);
+      msg.reply("Failed to take a screenshot.");
+    }
+  }
+
+  if (msgArray == "nepsetl") {
+    try {
+      const filePath = await scrapperService.topLoser();
+      await msg.reply({
+        content: `Screenshot of Nepse Status`,
+        files: [filePath],
+      });
+
+      fs.unlinkSync(filePath);
+    } catch (error) {
+      console.error("Error taking screenshot:", error.message);
+      msg.reply("Failed to take a screenshot.");
+    }
   }
 });
 
