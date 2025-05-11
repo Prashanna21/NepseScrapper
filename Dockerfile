@@ -1,5 +1,6 @@
 # Use official Puppeteer image (recommended)
-FROM ghcr.io/puppeteer/puppeteer:20.11.1
+FROM ghcr.io/puppeteer/puppeteer:16.1.0
+
 
 # OR use Node + manually install Chrome (alternative)
 # FROM node:20-bullseye-slim
