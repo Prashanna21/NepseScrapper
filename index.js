@@ -40,9 +40,6 @@ client.on("messageCreate", async (msg) => {
     console.log(data);
     msg.reply(msgArray[1] + " Price: " + data);
   }
-  if (msg === "roshan") {
-    msg.reply("Roshan is gay");
-  }
 });
 
 app.listen("3000", () => console.log("App is running"));

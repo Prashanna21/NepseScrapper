@@ -47,6 +47,16 @@ const scrapper = async (symbol) => {
       ),
     ]);
 
+    const companyTitleSelector = await page.waitForSelector(
+      "#ctl00_ContentPlaceHolder1_CompanyDetail1_companyName"
+    );
+
+    const compnayTitle = await companyTitleSelector?.evaluate(
+      (el) => el.textContent
+    );
+
+    console.log(compnayTitle);
+
     // 5. Frame-safe evaluation
     finalPrice = await page.evaluate((selector) => {
       try {
