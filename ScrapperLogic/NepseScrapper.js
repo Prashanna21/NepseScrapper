@@ -57,8 +57,8 @@ export class ConfigClass {
       `[data-target="#topGainerModal"]`
     );
     await viewMoreBtn.click();
-    await wait(100);
-    console.log("hmm");
+    await wait(1000);
+
     const topGainerSelector = await this.page.waitForSelector(
       "#topGainerModal .modal-dialog .modal-content"
     );
@@ -69,27 +69,36 @@ export class ConfigClass {
 
     console.log(`Saving screenshot to: ${this.filePath}`);
 
+    const closeBtn = await topGainerSelector.$(".modal-header .close span");
+
+    closeBtn.click();
+
     return this.filePath;
   }
 
   async topLoser() {
-    const topLosersBtn = await this.page.waitForSelector(`#losers-tab`);
-    console.log(topLosersBtn);
+    const topLosersBtn = await this.page.waitForSelector(`a#losers-tab`);
+
+    if (topLosersBtn) {
+      await topLosersBtn.scrollIntoView({ block: "center" });
+    }
+
     await topLosersBtn.click();
 
-    const viewMoreBtn = await this.page.waitForSelector(
-      `[data-target="#topGainerModal"]`
-    );
-    await viewMoreBtn.click();
-    await wait(100);
-    console.log("hmm");
+    await wait(1000);
+
+    const viewMoreBtn = await this.page.$$(`[data-target="#topGainerModal"]`);
+    await viewMoreBtn[1].click();
+    await wait(1000);
     const topGainerSelector = await this.page.waitForSelector(
       "#topGainerModal .modal-dialog .modal-content"
     );
 
-    console.log(topGainerSelector);
-
     await topGainerSelector.screenshot({ path: this.filePath });
+
+    const closeBtn = await topGainerSelector.$(".modal-header .close span");
+
+    closeBtn.click();
 
     console.log(`Saving screenshot to: ${this.filePath}`);
 

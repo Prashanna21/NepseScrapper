@@ -3,6 +3,7 @@ import scrapper from "./ScrapperLogic/scrapper.js";
 import { Client, Events, GatewayIntentBits, IntentsBitField } from "discord.js";
 import "dotenv/config";
 import scrapperService from "./ScrapperLogic/NepseScrapper.js";
+import sharehubScrapperService from "./ScrapperLogic/ShareHubScrapper.js";
 import fs from "fs";
 import { websiteScreensShot } from "./ScrapperLogic/WebsiteScreenShot.js";
 
@@ -91,6 +92,21 @@ client.on("messageCreate", async (msg) => {
   if (msgArray == "nepsetl") {
     try {
       const filePath = await scrapperService.topLoser();
+      await msg.reply({
+        content: `Screenshot of Nepse Status`,
+        files: [filePath],
+      });
+
+      fs.unlinkSync(filePath);
+    } catch (error) {
+      console.error("Error taking screenshot:", error.message);
+      msg.reply("Failed to take a screenshot.");
+    }
+  }
+
+  if (msgArray[0] == "sharehInf") {
+    try {
+      const filePath = await sharehubScrapperService.stockDetails(msgArray[1]);
       await msg.reply({
         content: `Screenshot of Nepse Status`,
         files: [filePath],
